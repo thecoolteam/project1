@@ -79,22 +79,17 @@
 </nav>
 
 <body>
-  <div class="container" style="width:20%; float:left">
+  <div class="container col-md-2" style="float:left">
     <div class="form-group">
+      <button id="destinationButton" class="dates"> Tell me! </button>
       <label for="search">Start</label>
           <input id="startInput" type="text" class="form-control" placeholder="Search">
       <label for="search">Destination</label>
           <input id="destinationInput"type="text" class="form-control" placeholder="Search">
-      <label for="search">Time (MM/DD/YY) </label>
-          <input id="timeInput" type="text" class="form-control" placeholder="Search">
-      <label for="search">WHATEVER</label>
-          <input id="whateverInput" type="text" class="form-control" placeholder="Search">
-        <br>
-      <button id="destinationButton" class="dates" style="padding:10px"> Tell me! </button>
     </div>
   </div>
 
-  <body>
+
     <input id="origin-input" class="controls" type="text"
         placeholder="Enter an origin location">
 
@@ -149,7 +144,7 @@
         console.log(start)
         console.log(destination)
         console.log(time)
-    
+
   database.ref().set({
     UserStart: start,
     UserDestination: destination,
@@ -274,7 +269,7 @@
             error: function(xhr, ajaxOptions, thrownError) {
                 if (xhr.status == 404) {
                     alert(thrownError);
-                  
+
                 }
             }
         }).done(function(response) {
@@ -286,7 +281,7 @@
                     url: queryURL,
                     error: function(xhr, ajaxOptions, thrownError) {
                         if (xhr.status == 404) {
-                            alert(thrownError);         
+                            alert(thrownError);
                         }
                     }
                 }).done(function(response) {
@@ -324,15 +319,15 @@
             }
         })
     })
-   
+
     function weatherAPI(location, epoch1) {
         //var location = $("#city").val()
-        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&mode=json&appid=83c792dc1352781699e5826c9c270917"
         $.ajax({
             url: queryURL,
             error: function(xhr, ajaxOptions, thrownError) {
                         if (xhr.status == 404) {
-                            alert(thrownError);         
+                            alert(thrownError);
                         }
                     }
         }).done(function(response) {
@@ -340,16 +335,16 @@
             //var epoch1 = 1506504944 // test timestamp logic variable
             var lengthForLoop = response.list.length
             if (epoch1 < response.list[0].dt) {
-                queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+                queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&mode=json&appid=83c792dc1352781699e5826c9c270917"
                 $.ajax({
                     url: queryURL,
                     error: function(xhr, ajaxOptions, thrownError) {
                         if (xhr.status == 404) {
-                            alert(thrownError);         
+                            alert(thrownError);
                         }
                     }
                 }).done(function(response) {
-                  
+
                     var kelvinTemp = response.main.temp
                     var convertedTemp = convertKelvinToFahrenheit(kelvinTemp)
                     response = {
@@ -374,7 +369,7 @@
                             icon : response.list[i].weather[0].icon
                         }
                         console.log(response)
-                        break 
+                        break
                     }
                 }
             }
