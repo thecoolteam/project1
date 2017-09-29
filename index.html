@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Geolocation</title>
+    <title>Place Autocomplete</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-
-      .header {
-         background-color: #4484CE;
-         color: white;
-       }
-
       #map {
         height: 100%;
       }
@@ -22,26 +16,63 @@
         margin: 0;
         padding: 0;
       }
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
 
-      #destinationButton {
-         background-color: #0B3C5D;
-         color: white;
-         margin: 10px 10px 10px 0px;
-         border-radius: 5px;
-       }
+      #origin-input,
+      #destination-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+
+      #origin-input:focus,
+      #destination-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #mode-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        margin-left: 12px;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #mode-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
     </style>
   </head>
 
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+
+
 
 <nav style="background-color: #4484CE" class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <a style="background-color: #4484CE; color: white;" class="navbar-brand" href="#">
-        <h5>GOOGLE and WEATHER"</h5>
+        <h5> GOOGLE and WEATHER </h5>
       </a>
     </div>
   </div>
@@ -51,129 +82,309 @@
   <div class="container" style="width:20%; float:left">
     <div class="form-group">
       <label for="search">Start</label>
-          <input type="text" class="form-control" placeholder="Search">
+          <input id="startInput" type="text" class="form-control" placeholder="Search">
       <label for="search">Destination</label>
-          <input type="text" class="form-control" placeholder="Search">
-      <label for="search">Hi HI HI Hi </label>
-          <input type="text" class="form-control" placeholder="Search">
-      <label for="search">HI HI hi HI</label>
-          <input type="text" class="form-control" placeholder="Search">
+          <input id="destinationInput"type="text" class="form-control" placeholder="Search">
+      <label for="search">Time (MM/DD/YY) </label>
+          <input id="timeInput" type="text" class="form-control" placeholder="Search">
+      <label for="search">WHATEVER</label>
+          <input id="whateverInput" type="text" class="form-control" placeholder="Search">
         <br>
       <button id="destinationButton" class="dates" style="padding:10px"> Tell me! </button>
     </div>
   </div>
 
-<div id="map"></div>
-
-    <script>
-
-    $("#destinationButton").on("click", function(){
-      alert("hi")
-    })
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-       var placeSearch, autocomplete;
-      var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-      };
-
-      function initAutocomplete() {
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-            {types: ['geocode']});
-
-        // When the user selects an address from the dropdown, populate the address
-        // fields in the form.
-        autocomplete.addListener('place_changed', fillInAddress);
-      }
-
-      function fillInAddress() {
-        // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
-
-        for (var component in componentForm) {
-          document.getElementById(component).value = '';
-          document.getElementById(component).disabled = false;
-        }
-
-        // Get each component of the address from the place details
-        // and fill the corresponding field on the form.
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0];
-          if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-          }
-        }
-      }
-
-      // Bias the autocomplete object to the user's geographical location,
-      // as supplied by the browser's 'navigator.geolocation' object.
-      function geolocate() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-          });
-        }
-      }
-    </script>
-   <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBya1cmCdx7OF1DfAEG_D3vxqIMAEpUvpw&libraries=places&callback=initAutocomplete"
-        async defer></script> -->
-  </body>
-
-    <title>Traffic layer</title>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 80%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
   <body>
+    <input id="origin-input" class="controls" type="text"
+        placeholder="Enter an origin location">
+
+    <input id="destination-input" class="controls" type="text"
+        placeholder="Enter a destination location">
+
+    <div id="mode-selector" class="controls">
+      <input type="radio" name="type" id="changemode-walking" checked="checked">
+      <label for="changemode-walking">Walking</label>
+
+      <input type="radio" name="type" id="changemode-transit">
+      <label for="changemode-transit">Transit</label>
+
+      <input type="radio" name="type" id="changemode-driving">
+      <label for="changemode-driving">Driving</label>
+    </div>
+
     <div id="map"></div>
-    <script>
+
+    <input type="text" name="Hello" id="city" placeholder="city here">
+    <input type="text" name="Hello" id="timestamp" placeholder="timestamp here">
+    <button type="Submit" id="submit">Submit</button>
+    <a href="https://www.epochconverter.com/" target="_blank">Link to time converter use epoch time for thie timestamp field e.g. 1506485287</a>
+    <p>Check console logs for response</p>
+
+<script>
+
+    var config = {
+    apiKey: "AIzaSyB-gK7ArVYsICoeXOgvMBd0YYiZLx8HAZM",
+    authDomain: "albertyufirebaseproject.firebaseapp.com",
+    databaseURL: "https://albertyufirebaseproject.firebaseio.com",
+    projectId: "albertyufirebaseproject",
+    storageBucket: "albertyufirebaseproject.appspot.com",
+    messagingSenderId: "931160770870"
+  };
+
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+  var start = "";
+  var destination= "";
+  var time = "MM/DD/YYYY";
+  var placeSearch, autocomplete;
+
+  $("#destinationButton").on("click", function() {
+        event.preventDefault();
+        alert("hi")
+        start = $("#startInput").val().trim()
+        destination = $("#destinationInput").val().trim()
+        time = $("#timeInput").val().trim()
+        console.log(start)
+        console.log(destination)
+        console.log(time)
+    
+  database.ref().set({
+    UserStart: start,
+    UserDestination: destination,
+    UserTime: time
+  });
+});
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
-          center: {lat: 34.04924594193164, lng: -118.24104309082031}
+          mapTypeControl: false,
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
         });
 
-        var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);
+        new AutocompleteDirectionsHandler(map);
       }
+
+       /**
+        * @constructor
+       */
+      function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'WALKING';
+        var originInput = document.getElementById('origin-input');
+        var destinationInput = document.getElementById('destination-input');
+        var modeSelector = document.getElementById('mode-selector');
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+
+        var originAutocomplete = new google.maps.places.Autocomplete(
+            originInput, {placeIdOnly: true});
+        var destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInput, {placeIdOnly: true});
+
+        this.setupClickListener('changemode-walking', 'WALKING');
+        this.setupClickListener('changemode-transit', 'TRANSIT');
+        this.setupClickListener('changemode-driving', 'DRIVING');
+
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
+
+      }
+
+      // Sets a listener on a radio button to change the filter type on Places
+      // Autocomplete.
+      AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+        radioButton.addEventListener('click', function() {
+          me.travelMode = mode;
+          me.route();
+        });
+      };
+
+      AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place.place_id) {
+            window.alert("Please select an option from the dropdown list.");
+            return;
+          }
+          if (mode === 'ORIG') {
+            me.originPlaceId = place.place_id;
+          } else {
+            me.destinationPlaceId = place.place_id;
+          }
+          me.route();
+        });
+
+      };
+
+      AutocompleteDirectionsHandler.prototype.route = function() {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+          return;
+        }
+        var me = this;
+
+        this.directionsService.route({
+          origin: {'placeId': this.originPlaceId},
+          destination: {'placeId': this.destinationPlaceId},
+          travelMode: this.travelMode
+        }, function(response, status) {
+          if (status === 'OK') {
+            me.directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      };
+
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBya1cmCdx7OF1DfAEG_D3vxqIMAEpUvpw&callback=initMap">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=places&callback=initMap"
+        async defer></script>
+
+    <script>
+    //ba0cc04ebdefc041241e9b4c64747f12 api key for weather
+    //http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=ba0cc04ebdefc041241e9b4c64747f12
+    var weatherRespond =$("#destination-input").val()
+    console.log(weatherRespond)
+
+    $("#submit").on('click', function() {
+        // put in a separate function path variables (loaction, timestamp)
+        var location = $("#city").val()
+        var epoch1 = $("#timestamp").val()
+        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+        $.ajax({
+            url: queryURL,
+            error: function(xhr, ajaxOptions, thrownError) {
+                if (xhr.status == 404) {
+                    alert(thrownError);
+                  
+                }
+            }
+        }).done(function(response) {
+            //var epoch1 = 1506483783 // test timestamp logic variable
+            var lengthForLoop = response.list.length
+            if (epoch1 < response.list[0].dt) {
+                queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+                $.ajax({
+                    url: queryURL,
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        if (xhr.status == 404) {
+                            alert(thrownError);         
+                        }
+                    }
+                }).done(function(response) {
+                    var kelvinTemp = response.main.temp
+                    var convertedTemp = convertKelvinToFahrenheit(kelvinTemp)
+                    response = {
+                        temp: convertedTemp,
+                        pressure: response.main.pressure,
+                        humidity: response.main.humidity,
+                        description: response.weather[0].description,
+                        icon:response.weather[0].icon
+                    }
+                    console.log(response)
+                    return response
+                })
+            } else {
+                for (var i = 0; i < lengthForLoop; i++) {
+                    if (epoch1 > response.list[i].dt && epoch1 < response.list[i + 1].dt) {
+                        var kelvinTemp = response.list[i].main.temp
+                        var convertedTemp = convertKelvinToFahrenheit(kelvinTemp)
+                        //http://openweathermap.org/img/w/01n.png
+                        response = {
+                            temp: convertedTemp,
+                            pressure: response.list[i].main.pressure,
+                            humidity: response.list[i].main.humidity,
+                            description: response.list[i].weather[0].description,
+                            icon : response.list[i].weather[0].icon,
+                            time : response.list[i].dt_txt
+                        }
+                        console.log(response)
+                        return response
+                        break
+                    }
+                }
+            }
+        })
+    })
+   
+    function weatherAPI(location, epoch1) {
+        //var location = $("#city").val()
+        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+        $.ajax({
+            url: queryURL,
+            error: function(xhr, ajaxOptions, thrownError) {
+                        if (xhr.status == 404) {
+                            alert(thrownError);         
+                        }
+                    }
+        }).done(function(response) {
+            var epoch = moment().unix(); // convert timestamp to epoch format
+            //var epoch1 = 1506504944 // test timestamp logic variable
+            var lengthForLoop = response.list.length
+            if (epoch1 < response.list[0].dt) {
+                queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&mode=json&appid=ba0cc04ebdefc041241e9b4c64747f12"
+                $.ajax({
+                    url: queryURL,
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        if (xhr.status == 404) {
+                            alert(thrownError);         
+                        }
+                    }
+                }).done(function(response) {
+                  
+                    var kelvinTemp = response.main.temp
+                    var convertedTemp = convertKelvinToFahrenheit(kelvinTemp)
+                    response = {
+                        temp: convertedTemp,
+                        pressure: response.main.pressure,
+                        humidity: response.main.humidity,
+                        description: response.weather[0].description,
+                        icon:  response.weather[0].icon
+                    }
+                    console.log(response)
+                })
+            } else {
+                for (var i = 0; i < lengthForLoop; i++) {
+                    if (epoch1 > response.list[i].dt && epoch1 < response.list[i + 1].dt) {
+                        var kelvinTemp = response.list[i].main.temp
+                        var convertedTemp = convertKelvinToFahrenheit(kelvinTemp)
+                        response = {
+                            temp: convertedTemp,
+                            pressure: response.list[i].main.pressure,
+                            humidity: response.list[i].main.humidity,
+                            description: response.list[i].weather[0].description,
+                            icon : response.list[i].weather[0].icon
+                        }
+                        console.log(response)
+                        break 
+                    }
+                }
+            }
+        })
+    }
+    function convertKelvinToFahrenheit(kelvin) {
+        var fahrenheit = ((kelvin - 273.15) * 1.8) + 32
+        return fahrenheit
+    }
     </script>
+
   </body>
 </html>
-    
-
-    <div> HI Hi HIHHIHIIH </div>
-  </body>
-</html>
-
