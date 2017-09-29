@@ -11,6 +11,20 @@
 }
 .btn {
   background-color: #4d90fe;
+  color: white;
+  /*opacity: .8;*/
+}
+.destinationText {
+  background-color: #4d90fe;
+  border-radius: 5px;
+  color: white;
+  /*opacity: .8;*/
+}
+.startText {
+  background-color: #4d90fe;
+  border-radius: 5px;
+  color: white;
+  /*opacity: .8;*/
 }
 
 #map {
