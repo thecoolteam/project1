@@ -151,6 +151,7 @@ html, body {
     left: 0 !important;
   }
 }
+
 @media screen and (max-width: 545px) {
   .inputContainer {
     position: absolute;
@@ -159,6 +160,7 @@ html, body {
     /*display: none;*/
     position: relative;
     border-radius: 5px ;
+    display: block;
   }
   #destination-input {
     /*display: none;*/
@@ -166,10 +168,12 @@ html, body {
     position: relative;
     border-radius: 5px ;
     left: 0 !important;
+    display: block;
   }
   #mode-selector {
     margin-top: 21%;
     position: relative;
     left: 0 !important;
+    display: block;
   }
 }
