@@ -75,7 +75,7 @@
         this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
 
-        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG'); // 
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);

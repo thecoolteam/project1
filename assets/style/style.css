@@ -5,7 +5,7 @@
   margin-bottom: 2%;
 
 }*/
-img {
+.logo {
   height: 50px;
   width: 100px;
 
@@ -109,6 +109,12 @@ html, body {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300;
+}
+#infoBox {
+  margin-top: 110px;
+  background-color: #4d90fe;
+  padding: 30px;
+  transition-duration: all 2s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {
