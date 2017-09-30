@@ -176,4 +176,28 @@ html, body {
     left: 0 !important;
     display: block;
   }
+  @media screen and (max-width: 365px) {
+    .inputContainer {
+      position: absolute;
+    }
+    #origin-input {
+      /*display: none;*/
+      position: relative;
+      border-radius: 5px ;
+      display: block;
+    }
+    #destination-input {
+      /*display: none;*/
+      margin-top: 11.5%;
+      position: relative;
+      border-radius: 5px ;
+      left: 0 !important;
+      display: block;
+    }
+    #mode-selector {
+      margin-top: 21%;
+      position: relative;
+      left: 0 !important;
+      display: block;
+    }
 }
