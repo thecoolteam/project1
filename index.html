@@ -17,8 +17,10 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand">
-        <h5> GOOGLE and WEATHER </h5>
+        <h5>COMMUTE ADVISOR</h5>
+
       </a>
+      <img src="assets/images/sun.png" alt="cute emoji">
     </div>
   </div>
 </nav>
@@ -46,8 +48,8 @@
     </div>
 
 
-    <!-- <div class="mapWrapper">
-      <div class="form">
+    <div class="mapWrapper">
+      <!-- <div class="form">
         <div class="form-group">
           <label class="startText" for="search">Start</label>
           <input id="startInput" type="text" class="form-control" placeholder="Search">
@@ -55,8 +57,13 @@
           <input id="destinationInput"type="text" class="form-control destinationInput" placeholder="Search">
         </div>
         <button id="destinationButton" class="dates btn"> Tell me! </button>
+      </div> -->
+      <div id="infoBox">
+        <div class="">
+
+        </div>
       </div>
-    </div> -->
+    </div>
     <div id="map"></div>
 
 
@@ -69,6 +76,9 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=places&callback=initMap"
     async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=geometry">
+</script>
+
     <script type="text/javascript" src="assets/javascript/app.js"></script>
   </body>
 </html>

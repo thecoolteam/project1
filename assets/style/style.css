@@ -5,6 +5,14 @@
   margin-bottom: 2%;
 
 }*/
+img {
+  height: 50px;
+  width: 100px;
+  
+}
+.container-fluid {
+  padding-bottom: 15px;
+}
  .navbar-default {
   margin-bottom: 0px !important;
 }
