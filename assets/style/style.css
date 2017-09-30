@@ -5,6 +5,9 @@
   margin-bottom: 2%;
 
 }*/
+ .navbar-default {
+  margin-bottom: 0px !important;
+}
 .form-control {
   position: relative;
 
@@ -16,17 +19,21 @@
 }
 .destinationText {
   background-color: #4d90fe;
-  border-radius: 5px;
+  border-radius: 2px;
   color: white;
+  padding: 5px;
   /*opacity: .8;*/
 }
 .startText {
   background-color: #4d90fe;
-  border-radius: 5px;
+  border-radius: 2px;
   color: white;
+  padding: 5px;
   /*opacity: .8;*/
 }
-
+.inputContainer {
+  position: absolute !important;
+}
 #map {
   height: 100%;
   z-index: 1;
@@ -36,7 +43,7 @@
 .mapWrapper {
   position: absolute;
   z-index: 9999;
-  top: 18%;
+  top: 15%;
 }
 a {
   background-color: #4484CE;
@@ -95,10 +102,74 @@ html, body {
 }
 
 @media screen and (max-width: 775px) {
-  .form-inline {
+  .form {
   margin: 0%;
   top: 0;
   width: 100%;
   display: inline-block;
+  }
+  .inputContainer {
+    position: absolute;
+  }
+  #origin-input {
+    /*display: none;*/
+    position: relative;
+    border-radius: 5px ;
+  }
+  #destination-input {
+    /*display: none;*/
+    margin-top: 7.3%;
+    position: relative;
+    border-radius: 5px ;
+    left: 0 !important;
+  }
+  #mode-selector {
+    margin-top: 13%;
+    position: relative;
+    left: 0 !important;
+  }
+}
+@media screen and (max-width: 630px) {
+  .inputContainer {
+    position: absolute;
+  }
+  #origin-input {
+    /*display: none;*/
+    position: relative;
+    border-radius: 5px ;
+  }
+  #destination-input {
+    /*display: none;*/
+    margin-top: 8%;
+    position: relative;
+    border-radius: 5px ;
+    left: 0 !important;
+  }
+  #mode-selector {
+    margin-top: 15%;
+    position: relative;
+    left: 0 !important;
+  }
+}
+@media screen and (max-width: 545px) {
+  .inputContainer {
+    position: absolute;
+  }
+  #origin-input {
+    /*display: none;*/
+    position: relative;
+    border-radius: 5px ;
+  }
+  #destination-input {
+    /*display: none;*/
+    margin-top: 11.5%;
+    position: relative;
+    border-radius: 5px ;
+    left: 0 !important;
+  }
+  #mode-selector {
+    margin-top: 21%;
+    position: relative;
+    left: 0 !important;
   }
 }
