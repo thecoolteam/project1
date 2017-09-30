@@ -5,11 +5,28 @@
   margin-bottom: 2%;
 
 }*/
-img {
+.logo {
   height: 50px;
   width: 100px;
   
 }
+
+.backgroundpic {
+  width: 100%;
+  height: 100%;
+}
+
+h1{
+  text-align: center;
+  background-color: #4d90fe;
+  padding: 20px;
+  margin: 0px; 
+}
+
+.button-class {
+  text-align: center;
+}
+
 .container-fluid {
   padding-bottom: 15px;
 }
