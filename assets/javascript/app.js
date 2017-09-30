@@ -45,6 +45,9 @@
           zoom: 11
         });
 
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
         new AutocompleteDirectionsHandler(map);
       }
 
