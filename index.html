@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Place Autocomplete</title>
+    <title>Project 1</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="assets/style/style.css">
     <meta charset="utf-8">
@@ -15,33 +15,28 @@
 
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 
-<nav style="background-color: #4484CE" class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a style="background-color: #4484CE; color: white;" class="navbar-brand" href="#">
-        <h5> GOOGLE and WEATHER </h5>
+      <a class="navbar-brand">
+        <h3>COMMUTE ADVISOR</h3>
+
       </a>
+
+      <img class="logo" src = "assets/images/sun.png" alt="cute emoji">
     </div>
   </div>
 </nav>
 
 <body>
-  <div class="form-inline">
-    <div class="form-group">
-      <label for="search">Start</label>
-          <input id="startInput" type="text" class="form-control" placeholder="Search">
-      <label for="search">Destination</label>
-          <input id="destinationInput"type="text" class="form-control" placeholder="Search">
-    </div>
-    <button id="destinationButton" class="dates btn"> Tell me! </button>
-  </div>
 
+  <div class="inputContainer">
 
     <input id="origin-input" class="controls" type="text"
-        placeholder="Enter an origin location">
+        placeholder="Origin location">
 
     <input id="destination-input" class="controls" type="text"
-        placeholder="Enter a destination location">
+        placeholder="Destination location">
 
     <div id="mode-selector" class="controls">
       <input type="radio" name="type" id="changemode-walking" checked="checked">
@@ -53,8 +48,29 @@
       <input type="radio" name="type" id="changemode-driving">
       <label for="changemode-driving">Driving</label>
     </div>
+    </div>
 
+
+    <div class="mapWrapper">
+      <!-- <div class="form">
+        <div class="form-group">
+          <label class="startText" for="search">Start</label>
+          <input id="startInput" type="text" class="form-control" placeholder="Search">
+          <label class="destinationText" for="search">Destination</label>
+          <input id="destinationInput"type="text" class="form-control destinationInput" placeholder="Search">
+        </div>
+        <button id="destinationButton" class="dates btn"> Tell me! </button>
+      </div> -->
+      <div id="infoBox">
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut <button id="close">open/close</button>
+        <div class="">
+
+        </div>
+      </div>
+    </div>
     <div id="map"></div>
+
+
 
     <!-- <input type="text" name="Hello" id="city" placeholder="city here">
     <input type="text" name="Hello" id="timestamp" placeholder="timestamp here">
@@ -64,6 +80,9 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=places&callback=initMap"
     async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=geometry">
+</script>
+
     <script type="text/javascript" src="assets/javascript/app.js"></script>
   </body>
 </html>
