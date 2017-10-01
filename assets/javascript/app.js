@@ -158,7 +158,6 @@ var timeZones = [];
 function getTimeZoneTime(slat, slng, elat, elng) {
 	var compareArray = [slat, slng, elat, elng]
 	var queryURLs = ["http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + slat + "&lng=" + slng + "", "http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + elat + "&lng=" + elng + ""]
-	debugger
     if (positionArray.length === 0 || positionArray === compareArray ) {
     	
     	positionArray = [slat, slng, elat, elng]
