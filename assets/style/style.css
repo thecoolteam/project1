@@ -36,6 +36,7 @@ h1{
   z-index: 1;
   margin: 0px;
   top: 0;
+  overflow: hidden;
 }
 a {
   background-color: #4484CE;
@@ -124,7 +125,6 @@ html, body {
 @media screen and (max-width: 768px) {
 #infoBox {
   width: 220px;
-  overflow: hidden;
 }
   .form {
   margin: 0%;
@@ -156,9 +156,9 @@ html, body {
     top: 190px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 401px) {
   #infoBox {
-
+    width: 195px;
   }
   #origin-input {
     margin-left: 0px;
