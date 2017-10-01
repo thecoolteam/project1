@@ -12,7 +12,7 @@ h1{
   text-align: center;
   background-color: #4d90fe;
   padding: 20px;
-  margin: 0px; 
+  margin: 0px;
 }
 
 .button-class {
@@ -104,8 +104,11 @@ html, body {
 #infoBox {
   background-color: #4d90fe;
   padding: 5px;
-  width: 45%;
+  width: 300px;
   border-radius: 25px;
+  margin: 0px;
+  display: inline-block;
+
   /*transform: scale(2) translateY(-50%) translateX(50%);*/
   /*transition-duration: all 2s ease-in-out;*/
 }
@@ -117,6 +120,9 @@ html, body {
 }
 
 @media screen and (max-width: 768px) {
+#infoBox {
+  width: 220px;
+}
   .form {
   margin: 0%;
   top: 0;
@@ -148,6 +154,9 @@ html, body {
   }
 }
 @media screen and (max-width: 400px) {
+  #infoBox {
+    
+  }
   #origin-input {
     margin-left: 0px;
   }
