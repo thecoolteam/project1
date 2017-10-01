@@ -75,6 +75,7 @@ html, body {
   text-overflow: ellipsis;
   width: 200px;
   border-radius: 100px;
+  z-index: 9999;
 }
 
 #origin-input:focus,
@@ -97,7 +98,7 @@ html, body {
 }
 .mapWrapper {
   position: absolute;
-  z-index: 9999;
+  z-index: 8000;
   top: 120px;
   color: white;
 }
@@ -108,7 +109,8 @@ html, body {
   border-radius: 25px;
   margin: 0px;
   display: inline-block;
-
+  z-index: 10;
+  opacity: .5;
   /*transform: scale(2) translateY(-50%) translateX(50%);*/
   /*transition-duration: all 2s ease-in-out;*/
 }
@@ -155,7 +157,7 @@ html, body {
 }
 @media screen and (max-width: 400px) {
   #infoBox {
-    
+
   }
   #origin-input {
     margin-left: 0px;
