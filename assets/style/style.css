@@ -1,43 +1,15 @@
-/* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
-/*.form-inline {
-  margin-left: 30%;
-  margin-bottom: 2%;
-
-}*/
 .logo {
   height: 50px;
   width: 100px;
-
 }
 .container-fluid {
-  padding-bottom: 15px;
+  padding-bottom: 5px;
 }
  .navbar-default {
   margin-bottom: 0px !important;
 }
 .form-control {
   position: relative;
-
-}
-.btn {
-  background-color: #4d90fe;
-  color: white;
-  /*opacity: .8;*/
-}
-.destinationText {
-  background-color: #4d90fe;
-  border-radius: 2px;
-  color: white;
-  padding: 5px;
-  /*opacity: .8;*/
-}
-.startText {
-  background-color: #4d90fe;
-  border-radius: 2px;
-  color: white;
-  padding: 5px;
-  /*opacity: .8;*/
 }
 .inputContainer {
   position: absolute !important;
@@ -48,18 +20,14 @@
   margin: 0px;
   top: 0;
 }
-.mapWrapper {
-  position: absolute;
-  z-index: 9999;
-  top: 15%;
-}
 a {
   background-color: #4484CE;
 }
 .container-fluid {
   background-color: #4484CE;
 }
-h5 {
+h3 {
+  margin: 0px !important;
   color: white !important;
 }
 /* Optional: Makes the sample page fill the window. */
@@ -110,11 +78,25 @@ html, body {
   font-size: 13px;
   font-weight: 300;
 }
+.mapWrapper {
+  position: absolute;
+  z-index: 9999;
+  top: 120px;
+  color: white;
+}
 #infoBox {
-  margin-top: 110px;
   background-color: #4d90fe;
-  padding: 30px;
-  transition-duration: all 2s ease-in-out;
+  padding: 5px;
+  width: 45%;
+  border-radius: 25px;
+  /*transform: scale(2) translateY(-50%) translateX(50%);*/
+  /*transition-duration: all 2s ease-in-out;*/
+}
+#close {
+  border: ;
+  border-radius: 100px;
+  background-color: #4484ce;
+  box-shadow: 1px 2px 2px black;
 }
 
 @media screen and (max-width: 768px) {
@@ -128,13 +110,11 @@ html, body {
     position: absolute;
   }
   #origin-input {
-    /*display: none;*/
     position: relative;
     border-radius: 100px ;
-    margin-top: 10px
+    margin-top: 10px;
   }
   #destination-input {
-    /*display: none;*/
     margin-top: 50px;
     position: relative;
     border-radius: 100px ;
@@ -146,5 +126,18 @@ html, body {
     position: relative;
     left: 0 !important;
   }
+  .mapWrapper {
+    top: 190px;
+  }
 }
+@media screen and (max-width: 400px) {
+  #origin-input {
+    margin-left: 0px;
+  }
+  #destination-input {
+    margin-left: 0px;
+  }
+  #mode-selector {
+    margin-left: 0px;
+  }
 }
