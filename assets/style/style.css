@@ -99,7 +99,7 @@ html, body {
 .mapWrapper {
   position: absolute;
   z-index: 8000;
-  top: 120px;
+  top: 280px;
   color: white;
 }
 #infoBox {
