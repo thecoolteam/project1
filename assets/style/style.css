@@ -124,6 +124,7 @@ html, body {
 @media screen and (max-width: 768px) {
 #infoBox {
   width: 220px;
+  overflow: hidden;
 }
   .form {
   margin: 0%;
