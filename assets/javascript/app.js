@@ -17,6 +17,11 @@
   var time = "MM/DD/YYYY";
   var placeSearch, autocomplete;
 
+  $("#close").click(function() {
+    $('.transform').toggleClass('transform-active');
+    console.log("clicked")
+  });
+
   $("#destinationButton").on("click", function() {
         event.preventDefault();
         alert("hi")
@@ -75,7 +80,7 @@
         this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
 
-        this.setupPlaceChangedListener(originAutocomplete, 'ORIG'); // 
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG'); //
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
