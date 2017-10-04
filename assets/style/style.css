@@ -13,10 +13,17 @@ h1{
   background-color: #4d90fe;
   padding: 20px;
   margin: 0px;
+  color: white;
+  font-family: 'orangejuice';
 }
 
-.button-class {
-  text-align: center;
+@font-face {
+  font-family: "orangejuice";
+  src: url("orangejuice.ttf");
+
+}
+
+.button-class  text-align: center;
 }
 
 .container-fluid {
