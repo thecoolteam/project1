@@ -19,7 +19,6 @@
 
   $("#close").click(function() {
     $('.transform').toggleClass('transform-active');
-    console.log("clicked");
   });
 
   $("#destinationButton").on("click", function() {
