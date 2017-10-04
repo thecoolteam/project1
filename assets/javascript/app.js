@@ -119,17 +119,20 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
             me.originPlaceId = place.place_id;
         } else {
             me.destinationPlaceId = place.place_id;
-            var city = place.name;
-            var requiredSyntax = city.replace(/ /g, "_");
-            var s;
-            s = requiredSyntax.substring(0, requiredSyntax.indexOf(','));
+            var placeInfo = place.name;
+            //to get the right syntax for Wunderground
+            var correctSyntax;
+            correctSyntax = place.name.split(", ");
+            var stateName;
+            stateName = correctSyntax[1]
+            var cityName;
+            cityName = correctSyntax[0]
 
-            console.log(city)
-            console.log(s)
+            console.log(placeInfo)
+            console.log(stateName)
+            console.log(cityName)
 
-            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/CA/" + s + ".json"
-
-            console.log(queryURL)
+            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/" + stateName + "/" + cityName + ".json"
 
             $.ajax({
                 url: queryURL,
@@ -140,8 +143,8 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
                 console.log(response);
                 var iconNew = response.hourly_forecast[0].condition;
                 console.log(iconNew)
-                var flickrKey = "4d8736c73994381c33fc11bd56da1d47"
-                var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrKey + "&format=json&nojsoncallback=1&text=cats&extras=" + iconNew
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                iconNew + "&api_key=dc6zaTOxFJmzC&limit=1";
                 console.log(queryURL)
 
                 $.ajax({
@@ -150,16 +153,16 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
 
                 }).done(function(response) {
 
-                    // $("#infoBox").empty();
-                    var results = response.photos;
-                    console.log(response);
-                    var weatherPhoto = results.photo[1];
-                    console.log(weatherPhoto);
-                    var weatherImg = $("<img>");
-                    //var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
-                    weatherImg.attr("src", weatherPhoto);
-                    weatherImg.attr("class", "gif");
-                    $("#infoBox").html(weatherImg);
+                $("#infoBoxNew").empty();
+                var results = response.data;
+                console.log(response);
+                var weatherPhoto = response.data[0].images.downsized_medium.url;
+                console.log(weatherPhoto);
+                var weatherImg = $("<img>");
+                // var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
+                weatherImg.attr("src", weatherPhoto);
+                weatherImg.attr("class", "gif");
+                $("#infoBoxNew").html(weatherImg);
 
                 });
             });
