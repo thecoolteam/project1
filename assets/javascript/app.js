@@ -5,107 +5,6 @@ var config = {
     projectId: "albertyufirebaseproject",
     storageBucket: "albertyufirebaseproject.appspot.com",
     messagingSenderId: "931160770870"
-  };
-
-  firebase.initializeApp(config);
-
-  var database = firebase.database();
-
-  var start = "";
-  var destination= "";
-  var time = "MM/DD/YYYY";
-  var placeSearch, autocomplete;
-
-  $("#close").click(function() {
-    $('.transform').toggleClass('transform-active');
-  });
-
-  $("#destinationButton").on("click", function() {
-        event.preventDefault();
-        alert("hi")
-        start = $("#startInput").val().trim()
-        destination = $("#destinationInput").val().trim()
-        time = $("#timeInput").val().trim()
-        console.log(start)
-        console.log(destination)
-        console.log(time)
-
-  database.ref().set({
-    UserStart: start,
-    UserDestination: destination,
-    UserTime: time
-  });
-});
-
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          mapTypeControl: false,
-          center: {lat: 37.720002, lng: -122.2775781 },
-          zoom: 11
-        });
-
-        var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);
-
-        new AutocompleteDirectionsHandler(map);
-      }
-
-       /**
-        * @constructor
-       */
-      function AutocompleteDirectionsHandler(map) {
-        this.map = map;
-        this.originPlaceId = null;
-        this.destinationPlaceId = null;
-        this.travelMode = 'WALKING';
-        var originInput = document.getElementById('origin-input');
-        var destinationInput = document.getElementById('destination-input');
-        var modeSelector = document.getElementById('mode-selector');
-        this.directionsService = new google.maps.DirectionsService;
-        this.directionsDisplay = new google.maps.DirectionsRenderer;
-        this.directionsDisplay.setMap(map);
-
-        var originAutocomplete = new google.maps.places.Autocomplete(
-            originInput, {placeIdOnly: true});
-        var destinationAutocomplete = new google.maps.places.Autocomplete(
-            destinationInput, {placeIdOnly: true});
-
-        this.setupClickListener('changemode-walking', 'WALKING');
-        this.setupClickListener('changemode-transit', 'TRANSIT');
-        this.setupClickListener('changemode-driving', 'DRIVING');
-
-        this.setupPlaceChangedListener(originAutocomplete, 'ORIG'); //
-        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
-
-
-      }
-
-      // Sets a listener on a radio button to change the filter type on Places
-      // Autocomplete.
-      AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
-        var radioButton = document.getElementById(id);
-        var me = this;
-        radioButton.addEventListener('click', function() {
-          me.travelMode = mode;
-          me.route();
-        });
-      };
-
-      AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
-        var me = this;
-        autocomplete.bindTo('bounds', this.map);
-        autocomplete.addListener('place_changed', function() {
-          var place = autocomplete.getPlace();
-          if (!place.place_id) {
-=======
 };
 
 firebase.initializeApp(config);
@@ -122,7 +21,9 @@ var endLng;
 var startLng;
 var startLat;
 
-
+$(".testme").click(function() {
+    $('.transform').toggleClass('transform-active');
+});
 
 
 $("#destinationButton").on("click", function() {
@@ -150,13 +51,14 @@ $("#destinationButton").on("click", function() {
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
-        center: { lat: -33.8688, lng: 151.2195 },
-        zoom: 13
+        center: { lat: 37.720002, lng: -122.2775781 },
+        zoom: 11
     });
 
     new AutocompleteDirectionsHandler(map);
     service = new google.maps.DistanceMatrixService()
 }
+
 
 /**
  * @constructor
@@ -210,7 +112,6 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
         var place = autocomplete.getPlace();
 
         if (!place.place_id) {
->>>>>>> 78e727ca1293e91fd4be486413d31c40364b2e24
             window.alert("Please select an option from the dropdown list.");
             return;
         }
@@ -218,6 +119,52 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
             me.originPlaceId = place.place_id;
         } else {
             me.destinationPlaceId = place.place_id;
+            var city = place.name;
+            var requiredSyntax = city.replace(/ /g, "_");
+            var s;
+            s = requiredSyntax.substring(0, requiredSyntax.indexOf(','));
+
+            console.log(city)
+            console.log(s)
+
+            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/CA/" + s + ".json"
+
+            console.log(queryURL)
+
+            $.ajax({
+                url: queryURL,
+                method: "GET",
+
+            }).done(function(response) {
+
+                console.log(response);
+                var iconNew = response.hourly_forecast[0].condition;
+                console.log(iconNew)
+                var flickrKey = "4d8736c73994381c33fc11bd56da1d47"
+                var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrKey + "&format=json&nojsoncallback=1&text=cats&extras=" + iconNew
+                console.log(queryURL)
+
+                $.ajax({
+                    url: queryURL,
+                    method: "GET",
+
+                }).done(function(response) {
+
+                    // $("#infoBox").empty();
+                    var results = response.photos;
+                    console.log(response);
+                    var weatherPhoto = results.photo[1];
+                    console.log(weatherPhoto);
+                    var weatherImg = $("<img>");
+                    //var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
+                    weatherImg.attr("src", weatherPhoto);
+                    weatherImg.attr("class", "gif");
+                    $("#infoBox").html(weatherImg);
+
+                });
+            });
+
+
         }
         me.route();
     });
@@ -258,11 +205,11 @@ var positionArray = []
 var timeZones = [];
 
 function getTimeZoneTime(slat, slng, elat, elng) {
-	var compareArray = [slat, slng, elat, elng]
-	var queryURLs = ["http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + slat + "&lng=" + slng + "", "http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + elat + "&lng=" + elng + ""]
-    if (positionArray.length === 0 || positionArray === compareArray ) {
+    var compareArray = [slat, slng, elat, elng]
+    var queryURLs = ["http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + slat + "&lng=" + slng + "", "http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + elat + "&lng=" + elng + ""]
+    if (positionArray.length === 0 || positionArray === compareArray) {
 
-    	positionArray = [slat, slng, elat, elng]
+        positionArray = [slat, slng, elat, elng]
         for (var i = 0; i < queryURLs.length; i++) {
             $.ajax({
                 url: queryURLs[i]
@@ -275,32 +222,29 @@ function getTimeZoneTime(slat, slng, elat, elng) {
                 }
             })
         }
-    }
-    else if (slat === positionArray[0] && slng === positionArray[1]){
-    	positionArray[2] = elat
-    	positionArray[3] = elng
-    	$.ajax({
-    		url: queryURLs[1]
-    	}).done(function(response){
-    		var zoneName = response.zoneName
-    		timeZones[1] = zoneName
-    		timeAtDestination(duration, timeZones[0], timeZones[1])
-    	})
-    }
-    else if (elat === positionArray[2] && elat === positionArray[3]){
-    	positionArray[0] = slat
-    	positionArray[1] = slng
-    	$.ajax({
-    		url: queryURLs[0]
-    	}).done(function(response){
-    		var zoneName = response.zoneName
-    		timeZones[0] = zoneName
-    		timeAtDestination(duration, timeZones[0], timeZones[1])
-    	})
+    } else if (slat === positionArray[0] && slng === positionArray[1]) {
+        positionArray[2] = elat
+        positionArray[3] = elng
+        $.ajax({
+            url: queryURLs[1]
+        }).done(function(response) {
+            var zoneName = response.zoneName
+            timeZones[1] = zoneName
+            timeAtDestination(duration, timeZones[0], timeZones[1])
+        })
+    } else if (elat === positionArray[2] && elat === positionArray[3]) {
+        positionArray[0] = slat
+        positionArray[1] = slng
+        $.ajax({
+            url: queryURLs[0]
+        }).done(function(response) {
+            var zoneName = response.zoneName
+            timeZones[0] = zoneName
+            timeAtDestination(duration, timeZones[0], timeZones[1])
+        })
     }
 }
 
-//1506827140693
 
 
 function timeAtDestination(duration, currentZone, destinationZone) {
@@ -319,7 +263,7 @@ function timeAtDestination(duration, currentZone, destinationZone) {
     //store current time and timeZone
 
     var currentTime = moment.tz(destinationTime, currentZone)
-    console.log(destinationZone +"  " +currentTime.tz(destinationZone).format())
+    console.log(destinationZone + "  " + currentTime.tz(destinationZone).format())
 }
 
 
