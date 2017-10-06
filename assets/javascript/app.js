@@ -1,4 +1,4 @@
-$(document).ready(function(){
+2$(document).ready(function(){
   //  the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
    $('.modal-trigger').modal();
  });
@@ -75,6 +75,9 @@ function initMap() {
 
     new AutocompleteDirectionsHandler(map);
     service = new google.maps.DistanceMatrixService()
+
+    var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
 }
 
 

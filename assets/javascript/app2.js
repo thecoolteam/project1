@@ -74,6 +74,9 @@ function initMap() {
 
   new AutocompleteDirectionsHandler(map);
   service = new google.maps.DistanceMatrixService()
+
+  var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
 }
 
 
