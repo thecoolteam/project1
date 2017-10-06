@@ -1,3 +1,8 @@
+$(document).ready(function(){
+  //  the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+   $('.modal-trigger').modal();
+ });
+
 var config = {
     apiKey: "AIzaSyB-gK7ArVYsICoeXOgvMBd0YYiZLx8HAZM",
     authDomain: "albertyufirebaseproject.firebaseapp.com",
@@ -21,7 +26,20 @@ var endLng;
 var startLng;
 var startLat;
 
-$(".testme").click(function() {
+$('.modal').modal({
+     dismissible: true, // Modal can be dismissed by clicking outside of the modal
+     opacity: .5, // Opacity of modal background
+     inDuration: 300, // Transition in duration
+     outDuration: 200, // Transition out duration
+     startingTop: '0%', // Starting top style attribute
+     endingTop: '0%', // Ending top style attribute
+     ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+       console.log(modal, trigger);
+     },
+   }
+ );
+
+$("#close").click(function() {
     $('.transform').toggleClass('transform-active');
 });
 
@@ -119,20 +137,17 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
             me.originPlaceId = place.place_id;
         } else {
             me.destinationPlaceId = place.place_id;
-            var placeInfo = place.name;
-            //to get the right syntax for Wunderground
-            var correctSyntax;
-            correctSyntax = place.name.split(", ");
-            var stateName;
-            stateName = correctSyntax[1]
-            var cityName;
-            cityName = correctSyntax[0]
+            var city = place.name;
+            var requiredSyntax = city.replace(/ /g, "_");
+            var s;
+            s = requiredSyntax.substring(0, requiredSyntax.indexOf(','));
 
-            console.log(placeInfo)
-            console.log(stateName)
-            console.log(cityName)
+            console.log(city)
+            console.log(s)
 
-            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/" + stateName + "/" + cityName + ".json"
+            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/CA/" + s + ".json"
+
+            console.log(queryURL)
 
             $.ajax({
                 url: queryURL,
@@ -143,8 +158,8 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
                 console.log(response);
                 var iconNew = response.hourly_forecast[0].condition;
                 console.log(iconNew)
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                iconNew + "&api_key=dc6zaTOxFJmzC&limit=1";
+                var flickrKey = "4d8736c73994381c33fc11bd56da1d47"
+                var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrKey + "&format=json&nojsoncallback=1&text=cats&extras=" + iconNew
                 console.log(queryURL)
 
                 $.ajax({
@@ -153,16 +168,16 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
 
                 }).done(function(response) {
 
-                $("#infoBoxNew").empty();
-                var results = response.data;
-                console.log(response);
-                var weatherPhoto = response.data[0].images.downsized_medium.url;
-                console.log(weatherPhoto);
-                var weatherImg = $("<img>");
-                // var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
-                weatherImg.attr("src", weatherPhoto);
-                weatherImg.attr("class", "gif");
-                $("#infoBoxNew").html(weatherImg);
+                    // $("#infoBox").empty();
+                    var results = response.photos;
+                    console.log(response);
+                    var weatherPhoto = results.photo[1];
+                    console.log(weatherPhoto);
+                    var weatherImg = $("<img>");
+                    //var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
+                    weatherImg.attr("src", weatherPhoto);
+                    weatherImg.attr("class", "gif");
+                    $("#infoBox").html(weatherImg);
 
                 });
             });

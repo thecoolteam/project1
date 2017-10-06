@@ -5,40 +5,37 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="assets/style/style.css">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.js"></script>
   </head>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand">
-        <h3>COMMUTE ADVISOR</h3>
-
-      </a>
-
-      <img class="logo" src = "assets/images/sun.png" alt="cute emoji">
-    </div>
-  </div>
-</nav>
 
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">
+          <h3>COMMUTE ADVISOR</h3>
+        </a>
+        <img class="logo" src = "assets/images/sun.png" alt="cute emoji">
+      </div>
+    </div>
+  </nav>
 
   <div class="inputContainer">
 
-    <input id="origin-input" class="controls" type="text"
+    <input id="origin-input" class="controls transform2" type="text"
         placeholder="Origin location">
 
-    <input id="destination-input" class="controls" type="text"
+    <input id="destination-input" class="controls transform2 " type="text"
         placeholder="Destination location">
 
-    <div id="mode-selector" class="controls">
+    <div id="mode-selector" class="controls transform2">
       <input type="radio" name="type" id="changemode-walking" checked="checked">
       <label for="changemode-walking">Walking</label>
 
@@ -50,39 +47,52 @@
     </div>
     </div>
 
+<div class="loginWrapper transform2">
 
-    <div class="mapWrapper">
-      <!-- <div class="form">
-        <div class="form-group">
-          <label class="startText" for="search">Start</label>
-          <input id="startInput" type="text" class="form-control" placeholder="Search">
-          <label class="destinationText" for="search">Destination</label>
-          <input id="destinationInput"type="text" class="form-control destinationInput" placeholder="Search">
-        </div>
-        <button id="destinationButton" class="dates btn"> Tell me! </button>
-      </div> -->
-      <div class="infoBox transform">
-
-        <button id="close" class="testme">open/close</button>
-        <div id="infoBoxNew"></div>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-      </div>
+  <div class="row section login">
+    <div class="col">
+      <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Login</a>
     </div>
+  </div>
+</div>
+
+    <div class="mapWrapper transform2">
+
+      <div class="infoBox transform">
+        <button id="close">Information</button>
+        <div class="destinationInfo"></div>
+        
+      </div>
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h1>Login</h1>
+          <div class="row">
+            <form class="col s12">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="icon_prefix" type="text" class="validate">
+                  <label class="formLabel" for="icon_prefix">Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="icon_email" type="email" class="validate">
+                  <label class="formLabel" for="icon_email">Email</label>
+                </div>
+                <button class="btn waves-effect waves-light" type="submit" name="action" formaction="./index.html">Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <div id="map"></div>
-
-
-
-    <!-- <input type="text" name="Hello" id="city" placeholder="city here">
-    <input type="text" name="Hello" id="timestamp" placeholder="timestamp here">
-    <button type="Submit" id="submit">Submit</button>
-    <a href="https://www.epochconverter.com/" target="_blank">Link to time converter use epoch time for thie timestamp field e.g. 1506485287</a>
-    <p>Check console logs for response</p> -->
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=places&callback=initMap"
     async defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPohRT1xe96u7JVPsKDHGNMi4gRWj4AAw&libraries=geometry">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <script type="text/javascript" src="assets/javascript/app.js"></script>
+    <script type="text/javascript" src="assets/javascript/app2.js"></script>
   </body>
 </html>

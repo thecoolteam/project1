@@ -1,8 +1,33 @@
+.modal-overlay {
+  display: none !important;
+}
+.btn {
+  margin-left: 12px;
+  border-radius: 25px !important;
+  box-shadow: 1px 1px 1px black !important;
+  right: -350px;
+  top: 15px !important;
+  padding:  13px !important;
+  line-height: 3px !important;
+  height: 27px !important;
+}
+.modal-content {
+  padding: 0px !important;
+}
+.modal {
+width: 100% !important;
+}
 .logo {
   height: 50px;
   width: 100px;
+  margin: 8px;
 }
-
+label {
+  color: white] !important;
+}
+.formLabel {
+  color: #26a69a !important;
+}
 .backgroundpic {
   width: 100%;
   height: 100%;
@@ -10,7 +35,7 @@
 
 h1{
   text-align: center;
-  background-color: #4d90fe;
+  background-color: #4484CE;
   padding: 20px;
   margin: 0px;
   color: white;
@@ -52,8 +77,13 @@ a {
   background-color: #4484CE;
 }
 h3 {
-  margin: 0px !important;
+  font-size: 30px !important;
+  margin: 2px !important;
   color: white !important;
+  font-family: 'orangejuice' !important;
+  float: left;
+  margin-top: 14px !important;
+
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -82,8 +112,10 @@ html, body {
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 200px;
+  height: 30px;
   border-radius: 100px;
-  z-index: 9999;
+  z-index: 9999 !important;
+
 }
 
 #origin-input:focus,
@@ -93,6 +125,7 @@ html, body {
 
 #mode-selector {
   color: #fff;
+  top: -10px !important;
   background-color: #4d90fe;
   margin-left: 12px;
   padding: 5px 11px 0px 11px;
@@ -106,22 +139,31 @@ html, body {
 }
 .mapWrapper {
   position: absolute;
-  z-index: 8000;
-  top: 280px;
+  z-index: 1000;
+  top: 100px;
   color: white;
+}
+.loginWrapper {
+  position: absolute;
+  z-index: 1000;
+  top: -12px;
+  color: white;
+
 }
 .infoBox {
   overflow: hidden;
   background-color: #4d90fe;
-  padding: 5px;
-  width: 95px;
-  height: 39px;
-  border-radius: 25px;
+  width: 86px;
+  height: 27px;
+  border-radius: 13px;
   margin-left: 12px;
   display: inline-block;
   box-shadow: 0 2px 6px black;
 }
 .transform {
+  transition: all .8s ease;
+}
+.transform2 {
   transition: all .8s ease;
 }
 .transform-active {
@@ -141,12 +183,6 @@ html, body {
 #infoBox {
   width: 220px;
 }
-  .form {
-  margin: 0%;
-  top: 0;
-  width: 100%;
-  display: inline-block;
-  }
   .inputContainer {
     position: absolute;
   }
@@ -166,12 +202,31 @@ html, body {
     border-radius: 100px;
     position: relative;
     left: 0 !important;
+    top: 0px !important;
   }
   .mapWrapper {
-    top: 190px;
+    top: 197px;
+  }
+  .btn {
+    top: 15px !important;
+    right: -350px;
   }
 }
-@media screen and (max-width: 401px) {
+
+@media screen and (max-width: 600px) {
+  #map {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 545px) {
+  .btn {
+    top: 15px !important;
+    right: -350px;
+  }
+}
+
+@media screen and (max-width: 445px) {
   #infoBox {
     width: 195px;
   }
@@ -186,5 +241,9 @@ html, body {
   }
   #mode-selector {
     margin-left: 0px;
+  }
+  .btn {
+    right: -215px;
+    top: 65px !important;
   }
 }
