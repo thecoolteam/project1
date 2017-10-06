@@ -1,1 +1,1 @@
-# project1Beta
+Our first class project!
