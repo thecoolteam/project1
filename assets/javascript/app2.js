@@ -173,10 +173,28 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
                   "<span class=" + temperature + ">" + temperature.english + " degrees</span>"
                 );
 
+                var iconConditionMap = {
+                  "Sunny" : "assets/images/sunny.png",
+                  "Chance of Rain" : "assets/images/Chance of Rain.png",
+                  "Clear" : "assets/images/clear.png",
+                  "Light Rain": "assets/images/light rain.png",
+                  "Mostly Cloudy": "assets/images/mostly cloudy.png",
+                  "Mostly Sunny": "assets/images/mostly sunny.jpg",
+                  "Overcast" : "assets/images/overcast.png",
+                  "Partly Cloudy": "assets/images/Partly Cloudy.png",
+                  "Rain": "assets/images/Rain.png",
+                  "Scattered Thunderstorms": "assets/images/Scattered Thunderstorms.png",
+                  "Showers": "assets/images/Showers.png",
+                  "Snow": "assets/images/Snow.png",
+                  "Thunderstorms": "assets/images/Thunderstorms.png"
+
+                }
+
                 $(".destinationInfo").append(
                   "<span class='condition " + iconNew + "''>" + iconNew + "</span>" +
-                  "<img src='assets/images/Sunny.png'>"
-                );
+                  "<img src='" + iconConditionMap[iconNew] + "'/>"
+
+               );
               });
 
 
