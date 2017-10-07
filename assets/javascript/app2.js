@@ -166,10 +166,16 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
                 console.log("iconNew", iconNew)
                 var results = response.data;
                 console.log(response);
+                var temperature = response.hourly_forecast[0].temp;
+                console.log(temperature);
+            
+                $(".destinationInfo").append(
+                  "<span class=" + temperature + ">" + temperature.english + " degrees</span>"
+                );
 
                 $(".destinationInfo").append(
-                  "<span class=" + iconNew + ">" + iconNew + "</span>" +
-                  "<img src='assets/images/sun.png'>"
+                  "<span class='condition " + iconNew + "''>" + iconNew + "</span>" +
+                  "<img src='assets/images/Sunny.png'>"
                 );
               });
 

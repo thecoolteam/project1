@@ -261,3 +261,7 @@ html, body {
     top: 0px !important;
   }
 }
+
+.condition {
+  margin-left: 10px;
+}
