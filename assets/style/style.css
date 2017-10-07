@@ -171,8 +171,9 @@ html, body {
   transition: all .8s ease;
 }
 .transform-active {
-  height: 420px;
+  height: 180px;
   width: 200px;
+  padding-left: 10px;
   margin-left: 0px;
 }
 #close {

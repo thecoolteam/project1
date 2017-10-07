@@ -167,6 +167,11 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
                   "<span class=" + iconNew + ">" + iconNew + "</span>" +
                   "<img src='assets/images/"+ iconNew +".png'>"
                 );
+                if (iconNew === "Clear" || iconNew === "Sunny") {
+                  $(".infoBox").append(
+                    "<p> It's nice out today! </p>"
+                  )
+                }
               });
 
 
