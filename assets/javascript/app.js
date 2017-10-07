@@ -1,5 +1,4 @@
-2$(document).ready(function(){
-  //  the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+$(document).ready(function(){
    $('.modal-trigger').modal();
  });
 
@@ -43,7 +42,6 @@ $("#close").click(function() {
     $('.transform').toggleClass('transform-active');
 });
 
-
 $("#destinationButton").on("click", function() {
     event.preventDefault();
     alert("hi")
@@ -71,44 +69,41 @@ function initMap() {
         mapTypeControl: false,
         center: { lat: 37.720002, lng: -122.2775781 },
         zoom: 11
-    });
+      });
 
-    new AutocompleteDirectionsHandler(map);
-    service = new google.maps.DistanceMatrixService()
-
-    var trafficLayer = new google.maps.TrafficLayer();
-        trafficLayer.setMap(map);
+  new AutocompleteDirectionsHandler(map);
+  service = new google.maps.DistanceMatrixService()
 }
 
 
 /**
- * @constructor
- */
+* @constructor
+*/
 function AutocompleteDirectionsHandler(map) {
-    this.map = map;
-    this.originPlaceId = null;
-    this.destinationPlaceId = null;
-    this.travelMode = 'WALKING';
-    var originInput = document.getElementById('origin-input');
-    var destinationInput = document.getElementById('destination-input');
-    var modeSelector = document.getElementById('mode-selector');
-    this.directionsService = new google.maps.DirectionsService;
-    this.directionsDisplay = new google.maps.DirectionsRenderer;
-    this.directionsDisplay.setMap(map);
+  this.map = map;
+  this.originPlaceId = null;
+  this.destinationPlaceId = null;
+  this.travelMode = 'WALKING';
+  var originInput = document.getElementById('origin-input');
+  var destinationInput = document.getElementById('destination-input');
+  var modeSelector = document.getElementById('mode-selector');
+  this.directionsService = new google.maps.DirectionsService;
+  this.directionsDisplay = new google.maps.DirectionsRenderer;
+  this.directionsDisplay.setMap(map);
 
-    var originAutocomplete = new google.maps.places.Autocomplete(
-        originInput, { placeIdOnly: true });
-    var destinationAutocomplete = new google.maps.places.Autocomplete(
-        destinationInput, { placeIdOnly: true });
+  var originAutocomplete = new google.maps.places.Autocomplete(
+      originInput, { placeIdOnly: true });
+  var destinationAutocomplete = new google.maps.places.Autocomplete(
+      destinationInput, { placeIdOnly: true });
 
-    this.setupClickListener('changemode-walking', 'WALKING');
-    this.setupClickListener('changemode-transit', 'TRANSIT');
-    this.setupClickListener('changemode-driving', 'DRIVING');
+  this.setupClickListener('changemode-walking', 'WALKING');
+  this.setupClickListener('changemode-transit', 'TRANSIT');
+  this.setupClickListener('changemode-driving', 'DRIVING');
 
-    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+  this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+  this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
 
@@ -140,50 +135,39 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
             me.originPlaceId = place.place_id;
         } else {
             me.destinationPlaceId = place.place_id;
-            var city = place.name;
-            var requiredSyntax = city.replace(/ /g, "_");
-            var s;
-            s = requiredSyntax.substring(0, requiredSyntax.indexOf(','));
+            var placeInfo = place.name;
+            //to get the right syntax for Wunderground
+            var correctSyntax;
+            correctSyntax = place.name.split(", ");
+            var stateName;
+            stateName = correctSyntax[1]
+            var cityName;
+            cityName = correctSyntax[0]
 
-            console.log(city)
-            console.log(s)
+            console.log(placeInfo)
+            console.log(stateName)
+            console.log(cityName)
 
-            var queryURL = "http://api.wunderground.com/api/badbf91cbcaea172/hourly/q/CA/" + s + ".json"
-
-            console.log(queryURL)
+            var queryURL = "https://api.wunderground.com/api/badbf91cbcaea172/hourly/q/" + stateName + "/" + cityName + ".json"
 
             $.ajax({
                 url: queryURL,
                 method: "GET",
 
             }).done(function(response) {
+              $(".destinationInfo").empty();
 
                 console.log(response);
                 var iconNew = response.hourly_forecast[0].condition;
-                console.log(iconNew)
-                var flickrKey = "4d8736c73994381c33fc11bd56da1d47"
-                var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + flickrKey + "&format=json&nojsoncallback=1&text=cats&extras=" + iconNew
-                console.log(queryURL)
+                console.log("iconNew", iconNew)
+                var results = response.data;
+                console.log(response);
 
-                $.ajax({
-                    url: queryURL,
-                    method: "GET",
-
-                }).done(function(response) {
-
-                    // $("#infoBox").empty();
-                    var results = response.photos;
-                    console.log(response);
-                    var weatherPhoto = results.photo[1];
-                    console.log(weatherPhoto);
-                    var weatherImg = $("<img>");
-                    //var testPic = "https://sc.mogicons.com/share/sunny-emoticon-245.jpg"
-                    weatherImg.attr("src", weatherPhoto);
-                    weatherImg.attr("class", "gif");
-                    $("#infoBox").html(weatherImg);
-
-                });
-            });
+                $(".destinationInfo").append(
+                  "<span class=" + iconNew + ">" + iconNew + "</span>" +
+                  "<img src='assets/images/"+ iconNew +".png'>"
+                );
+              });
 
 
         }
@@ -202,40 +186,40 @@ AutocompleteDirectionsHandler.prototype.route = function() {
         destination: { 'placeId': this.destinationPlaceId },
         travelMode: this.travelMode
 
-    }, function(response, status) {
-        if (status === 'OK') {
+      }, function(response, status) {
+         if (status === 'OK') {
 
-            duration = response.routes['0'].legs['0'].duration.value
+             duration = response.routes['0'].legs['0'].duration.value
 
-            startLat = response.routes['0'].legs['0'].start_location.lat()
-            startLng = response.routes['0'].legs['0'].start_location.lng()
+             startLat = response.routes['0'].legs['0'].start_location.lat()
+             startLng = response.routes['0'].legs['0'].start_location.lng()
 
-            endLat = response.routes['0'].legs['0'].end_location.lat()
-            endLng = response.routes['0'].legs['0'].end_location.lng()
+             endLat = response.routes['0'].legs['0'].end_location.lat()
+             endLng = response.routes['0'].legs['0'].end_location.lng()
 
-            getTimeZoneTime(startLat, startLng, endLat, endLng)
+             getTimeZoneTime(startLat, startLng, endLat, endLng)
 
-            me.directionsDisplay.setDirections(response);
-        } else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
-};
+             me.directionsDisplay.setDirections(response);
+         } else {
+             window.alert('Directions request failed due to ' + status);
+         }
+     });
+ };
 
-var positionArray = []
-var timeZones = [];
+ var positionArray = []
+ var timeZones = [];
 
-function getTimeZoneTime(slat, slng, elat, elng) {
-    var compareArray = [slat, slng, elat, elng]
-    var queryURLs = ["http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + slat + "&lng=" + slng + "", "http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + elat + "&lng=" + elng + ""]
-    if (positionArray.length === 0 || positionArray === compareArray) {
+ function getTimeZoneTime(slat, slng, elat, elng) {
+     var compareArray = [slat, slng, elat, elng]
+     var queryURLs = ["http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + slat + "&lng=" + slng + "", "http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=" + elat + "&lng=" + elng + ""]
+     if (positionArray.length === 0 || positionArray === compareArray) {
 
-        positionArray = [slat, slng, elat, elng]
-        for (var i = 0; i < queryURLs.length; i++) {
-            $.ajax({
-                url: queryURLs[i]
-            }).done(function(response) {
-                //console.log(response.zoneName)
+         positionArray = [slat, slng, elat, elng]
+         for (var i = 0; i < queryURLs.length; i++) {
+             $.ajax({
+                 url: queryURLs[i]
+             }).done(function(response) {
+               //console.log(response.zoneName)
                 var zoneName = response.zoneName
                 timeZones.push(zoneName)
                 if (timeZones.length === 2) {
@@ -293,13 +277,10 @@ function timeAtDestination(duration, currentZone, destinationZone) {
 
 
 /*timeZone API
-http://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=40.712916&lng=-74.00582930000002
-
-
+https://api.timezonedb.com/v2/get-time-zone?key=WE21E5J1HORM&format=json&by=position&lat=40.712916&lng=-74.00582930000002
 https://timezonedb.com/ajax.get-time-zone?coordinate=test%2Ctest
 
 Username : coolteam
 API Key  : WE21E5J1HORM
-
 For more information of how to use our API, please refer to:
 http://timezonedb.com/api*/

@@ -1,6 +1,9 @@
 .modal-overlay {
   display: none !important;
 }
+input {
+  color: black !important;
+}
 .btn {
   margin-left: 12px;
   border-radius: 25px !important;
@@ -136,6 +139,7 @@ html, body {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300;
+  color: white;
 }
 .mapWrapper {
   position: absolute;
@@ -177,6 +181,13 @@ html, body {
   border-radius: 100px;
   background-color: #4484ce;
   box-shadow: 1px 2px 2px black;
+}
+.modalSubmit {
+  left: 0px;
+  top: 6px !important;
+}
+.modal-close {
+  float: right;
 }
 
 @media screen and (max-width: 768px) {
@@ -245,5 +256,8 @@ html, body {
   .btn {
     right: -215px;
     top: 65px !important;
+  }
+  .modalSubmit {
+    top: 0px !important;
   }
 }
